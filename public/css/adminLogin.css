@@ -1,0 +1,14 @@
+header{
+    background-color: #d0d0d3;
+}
+form{
+    width: 30%;
+    background-color: #f3f3f3;
+    padding: 30px 30px;
+    box-sizing: border-box;
+    margin: auto;
+    margin-top: 130px;
+}
+form input{
+    background:none !important;
+}

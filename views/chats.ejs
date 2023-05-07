@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+  <title>Hello, world!</title>
+  <style>
+    .outgoing {
+      display: block;
+      width: 63%;
+      float: right;
+      text-align: left;
+      /* padding-left: 10px; */
+      background: #e8ffe8;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      margin-top: 12px;
+    }
+
+    .incoming {
+      display: block;
+      width: 63%;
+      float: left;
+      text-align: left;
+      background: #e8ffff;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      margin-top: 12px;
+      margin-left: 12px;
+    }
+
+    .incoming h6 {
+      font-weight: bolder;
+      margin-top: 10px;
+    }
+
+    .outgoing h6 {
+      font-weight: bolder;
+      margin-top: 10px;
+    }
+
+    .addClass {
+      background: #ececec;
+      border-bottom: solid 3px #fff;
+      cursor: pointer;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .pdf-icon {
+      width: 30px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <div class="row pt-5">
+        <div class="col-md-3 border p-0" style="height: 100vh; overflow: hidden">
+          <ul class="p-3 m-0 rounded" style="background: #e4e4e4">
+            <li>chat with user</li>
+          </ul>
+          <ul class="p-3 text-light rounded m-0" style="background: #d44848">
+            <li> Unread Messages</li>
+          </ul>
+
+          <div class="p-3">
+            <ul class="p-0 m-0">
+              <li>
+                <input id="myInput" onkeyup="myFunction()" type="text" class="p-2 form-control w-100"
+                  placeholder="Search user...." />
+              </li>
+            </ul>
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+              tabindex="0" style="height: 90vh; overflow: hidden; overflow-y: scroll">
+              <table id="chatsList">
+
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 ps-5" data-spy="scroll" data-target=".navbar" data-offset="50">
+          <div class="border p-4 border-2">
+            <div class="border p-3" style="height: 60vh; overflow: hidden; overflow-y: scroll">
+              <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+                tabindex="0" id="chatBox">
+
+              </div>
+            </div>
+          </div>
+          <div>
+            <textarea name="" id="textfield" class="form-control mt-4 border border-2" rows="3"></textarea>
+            <button id="sendButton" onclick="loopsendmsg()" style="background:#0696a1 "
+              class="btn py-1 px-4 mt-3 text-light">
+              Send
+            </button>
+            <a style="background: #0696a1" class="btn py-1 px-4 mt-3 text-light" href="/dashboard">Back</a>
+
+            <input id="fileInput" type="file" style="background: #0696a1;" class="btn py-1 px-4 text-light mt-3"
+              name="img">
+
+            <button onclick="sendPaymentLink()" style="background: #0696a1;" class="btn py-1 px-4 mt-3 text-light">
+              Send Payment Link
+            </button>
+            <!-- Button trigger modal -->
+            <button style="background: #0696a1;" class="mt-3 btn text-light" data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop1">
+              Customize payment
+            </button>
+
+            <button style="background: #0696a1;display: none;" class="mt-3 btn text-light" data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop2" id="ChatAssignButton">
+              Chat Asign
+            </button>
+
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Enter Costomize Price</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="" id="custmizeForm" method="post">
+                    <div class="modal-body">
+                      <input type="text" id="customizePrice" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" style="background: rgb(164, 216, 118)" class="btn py-1 px-4 mt-3">
+                        Send
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- SECONED MODAL -->
+
+            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable ">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel1">Chat Assign</h1>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form action="/chatAssign" id="chatAssignForm" method="post">
+                    <div class="modal-body">
+
+
+                      <select name="chatAssign" id="subAdminId" class="form-control">
+                        <option value="" disabled selected hidden>please select sub admin</option>
+                        <% SubAdmin.forEach((result)=>{ %>
+
+                          <option value="<%=result._id%>">
+                            <%=result.username%>
+                          </option>
+
+                          <% })%>
+                      </select>
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" style="background: rgb(164, 216, 118)" class="btn py-1 px-4 mt-3">
+                        Send
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+
+    var socket = null;
+    const token = localStorage.getItem("token");
+    var theChatId
+    var userData
+    const ENDPOINT = "http://localhost:5000";
+
+
+
+    let form = document.getElementById('chatAssignForm')
+
+    //  let form = document.getElementById('form');
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let subAdminId = $('#subAdminId').val();
+
+      $.ajax({
+        url: "http://localhost:5000/chatAssign",
+        method: "post",
+        contentType: "application/x-www-form-urlencoded",
+        data: {
+          subAdminId, theChatId
+        },
+        success: function (res) {
+          window.location = "http://localhost:5000/chats"
+        },
+        error: function (error) {
+          console.log(error)
+
+        }
+      })
+    });
+
+
+    //   if(socket){
+    // console.log("socket outside")
+    //     socket.on("message", (msg)=>{
+    //       console.log("Recieved msg", msg)
+    //     })
+    //   }
+
+    // socket.on('receive-user', function (data) {
+    //   console.log(data)
+    // })
+    // socket.on("new-user-joined", (id) => {
+    //   console.log("user", id)
+    // })
+    //  var socket, selectedChatCompare;
+
+
+    $.ajax({
+      url: `${ENDPOINT}/viewProfile`,
+      method: "get",
+      mode: "cors",
+      contentType: "application/x-www-form-urlencoded",
+      headers: {
+        authorization: token,
+      },
+      success: function (res) {
+
+        userData = res.data
+        // socket.emit("setup", userData);
+        // socket.on("connected", () => console.log('ljjfj'));
+        // socket.on("typing", () => console.log('fkjf'));
+        // socket.on("stop typing", () => console.log('dk'));
+
+
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+
+    function sendSocketMessage(response) {
+      console.log("socket: ", socket)
+      socket.emit("message", response);
+    }
+
+    console.log(userData);
+    const sendPaymentLink = async () => {
+      console.log("chat id", theChatId)
+      var settings = {
+        "url": `${ENDPOINT}/getOrderDetailsInChat/${theChatId}`,
+        "method": "get",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+      };
+
+      await $.ajax(settings).done(function (response) {
+        console.log("amount status", response)
+        if (response.message.type === "Ordered") {
+
+          if (response.message.status !== "success") {
+
+            sendMessage("link", "null", response.message.totalAmount)
+
+          } else {
+            alert("your order amount is already paid")
+          }
+        } else {
+          alert(`you can't send payment link because this order is ${response.message.type}  so you can use custmize payment link`)
+        }
+
+      })
+
+    }
+
+    // CUSTOMIZE PAYMENT
+
+    let custmizeForm = document.getElementById("custmizeForm")
+    custmizeForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let CustomizePrice = $("#customizePrice").val();
+      console.log("CustomizePrice", CustomizePrice)
+      console.log("chat id", theChatId)
+      if (CustomizePrice) {
+        var settings = {
+          "url": `${ENDPOINT}/getOrderDetailsInChat/${theChatId}`,
+          "method": "get",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+        };
+
+        $.ajax(settings).done(function (response) {
+          console.log("amount status", response)
+          if (response.message.type === "Customize") {
+
+            if (response.message.status !== "success") {
+              alert("send customize payment link")
+              sendMessage("link", "null", CustomizePrice)
+            } else {
+              alert("your order amount is already paid")
+            }
+          } else {
+            alert(`you can't send customize payment link because this order is ${response.message.type}  so you can use send payment link`)
+          }
+
+        })
+      } else {
+        alert("please enter customize price")
+        e.preventDefault()
+      }
+    })
+
+    var input = document.getElementById("textfield");
+    input.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("sendButton").click();
+      }
+    });
+
+    const loopsendmsg = () => {
+      let arr = []
+      let text = document.getElementById("textfield").value;
+      var selectfile = document.getElementById("fileInput").files[0]
+      // console.log("selectfile",selectfile.name)
+
+      if (text) {
+        arr.push({ "text": text })
+      };
+      if (selectfile) {
+        arr.push({ "selectfile": selectfile })
+      }
+      console.log(arr)
+      // console.log(arr[0].selectfile)
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].text !== undefined) {
+          sendMessage("message", null, arr[i].text)
+          let ab = document.getElementById("textfield").value = ""
+
+        } else {
+          // console.log("hiiii")
+          extension = arr[i].selectfile.name.substring(arr[i].selectfile.name.lastIndexOf('.') + 1);
+          if (extension === "jpg" || extension === "png" || extension === "jpeg") {
+            sendMessage("image", null, "https://www.shutterstock.com/image-photo/archway-enchanted-fairy-forest-landscape-260nw-1505459789.jpg")
+            document.getElementById("fileInput").value = ''
+          } else if (extension === "pdf") {
+            sendMessage("pdf", selectfile.name, "https://www.africau.edu/images/default/sample.pdf")
+            document.getElementById("fileInput").value = ''
+          } else if (extension === "docx" || extension === "doc") {
+            sendMessage("docx", selectfile.name, "https://docs.google.com/document/d/14DO6AtLYLtvvwh3gjkJ8Xb6ESs0YDdQpjRvq_XvoZdM/edit#heading=h.x8fm1uorkbaw")
+            document.getElementById("fileInput").value = ''
+          } else {
+            alert("you can use only .jpg .png .jpeg .pdf .docx format")
+            return;
+          }
+        }
+
+      }
+
+
+      // console.log("selectfile",selectfile)
+
+    }
+
+    const sendMessage = (type, name, content) => {
+
+      console.log("socket: sendmessage", socket);
+      // if (selectfile !== undefined) {
+      //   var fd = new FormData()
+      //   if (!selectfile.type.match('image.*')) {
+      //     alert("you can select only image")
+      //     return;
+      //   }
+      // }
+
+      var settings = {
+        "url": `${ENDPOINT}/message`,
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+          "authorization": token,
+          "Content-Type": "application/json"
+        },
+        "data": JSON.stringify({
+          "chatId": theChatId,
+          "content": content,
+          "type": type,
+          "name": name
+
+        }),
+      };
+
+      $.ajax(settings).done(function (response) {
+        console.log("hgggggg", response)
+        sendSocketMessage(response)
+        if (response.type === "message") {
+          let chatBox = document.querySelector("#chatBox");
+          let div = document.createElement("div");
+          div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", response._id);
+          let content = `<div style="position: relative; padding: 0px 13px"><h6 id="scrollspyHeading1">${response.sender.username}</h6>
+          <p>${response.content}</p>
+         
+          <button id="babluuu" onclick= clickId("${response._id}") type="button" class="bg-transparent border-0 position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="bi bi-pencil-square"></i>
+                                  </button>
+                                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                         <form action="/edit-message" method="post" id="updateForm">
+                                          <input type="text" placeholder="Enter New Message...." id="updateForminput" class="form-control">
+                                          <div class="modal-footer">
+                                           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                                          </div>
+                                          </form>
+                                        </div>
+                                       
+                                      </div>
+                                    </div>
+                                  </div>
+                              <div>
+                                <span style="float:right">${response.datetime}</span>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (response.type === "image") {
+          let div = document.createElement("div");
+          div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", response._id);
+          let content = `
+              <div style="padding: 0px 13px;">
+                <h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                <img style="width:230px" src="${response.content}" />
+              <div>
+                <span style="float:right">${response.datetime}</span>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (response.type === "pdf") {
+          let div = document.createElement("div");
+          div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", response._id);
+          let content = `<div style="padding: 0px 13px;"><h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                                      <div>
+                                          <img class="pdf-icon"  src="/image/pdf.png"/>
+                                          <span style="margin-left:20px">${response.name}</span>
+                                            <a style="
+                                            float: right;
+                                            margin-right: 32px;
+                                            font-size: 20px;
+                                            color: #000;
+                                            "href="${response.content}" target="_blank"/>
+                                                  <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                      </div>
+                
+                              <div>
+                                <span style="float:right">${response.datetime}</span>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (response.type === "docx") {
+          let div = document.createElement("div");
+          div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", response._id);
+          let content = `<div style="padding: 0px 13px;"><h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                                      <div>
+                                          <img class="pdf-icon"  src="/image/docx.png"/>
+                                          <span style="margin-left:20px">${response.name}</span>
+                                            <a style="
+                                            float: right;
+                                            margin-right: 32px;
+                                            font-size: 20px;
+                                            color: #000;
+                                            "href="${response.content}" target="_blank"/>
+                                                  <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                      </div>
+                
+                              <div>
+                                <span style="float:right">${response.datetime}</span>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        } else if (response.type === "link") {
+          let div = document.createElement("div");
+          div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", response._id);
+          let content = `
+          <div>
+              <div class="bg-light text-center p-4">
+                  <h3>
+                    Payment
+                  </h3>
+                  <p>please make payment</p>
+              </div>
+                <label class="form-control text-light" style="background: rgb(91 163 98)">
+                      Pay<b style="float: right">${response.content}</b>
+                </label>
+          </div>
+          <span style="float:right">${response.datetime}</span>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        // console.log("00000",response);
+        // const a=document.getElementById("fileInput").files
+        // console.log("aaaaaa",a)
+      })
+    }
+
+    // if(socket){
+
+    //     socket.on("message", (msg)=>{
+    //     console.log("Recieved msg", msg)
+    //   })
+
+    // }
+
+
+
+
+    const trClicked = async (e) => {
+      theChatId = e.target.id;
+      console.log(theChatId)
+
+      $.ajax({
+        url: "http://localhost:5000/checkChatAccess",
+        method: "post",
+        contentType: "application/x-www-form-urlencoded",
+        data: {
+          theChatId
+        },
+        success: function (res) {
+          console.log(res)
+          document.getElementById("chatBox").innerHTML = "";
+
+          $.ajax({
+            url: `${ENDPOINT}/message/${e.target.id}`,
+            method: "get",
+            contentType: "application/x-www-form-urlencoded",
+            headers: {
+              authorization: token,
+            },
+            success: function (res) {
+              const result = res;
+
+              let chatBox = document.querySelector("#chatBox");
+              socket = io("ws://localhost:5000", { query: { roomId: theChatId }, transports: ['websocket'], })
+
+              socket.on('connect', function () {
+                console.log("connected:", socket.connected);
+              });
+
+              connectSocket(socket);
+
+              //  socket.on("message", (msg)=>{
+              //     console.log("Recieved msg", msg)
+              //   })
+              //  io.on("connection", ()=>{
+              //   console.log("admin connected")
+              //  })
+              console.log("socket: ", socket);
+              result.forEach(async (response) => {
+
+                console.log("rrrrrrrrr", response)
+                if (response.type === "message") {
+                  console.log("message")
+                  let chatBox = document.querySelector("#chatBox");
+                  let div = document.createElement("div");
+                  div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+                  div.setAttribute("id", response._id);
+                  let content = `<div style="position: relative;padding: 0px 13px;">
+                            <h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                            <p>${response.content}</p>
+                            <button id="babluuu" onclick= clickId("${response._id}") type="button" class="bg-transparent border-0 position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                              <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                   <form action="/edit-message" method="post" id="updateForm">
+                                    <input type="text" placeholder="Enter New Message...." id="updateForminput" class="form-control">
+                                    <div class="modal-footer">
+                                     <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                                    </div>
+                                    </form>
+                                  </div>
+                                 
+                                </div>
+                              </div>
+                            </div>
+                        <div>
+                       <span style="float:right">${response.datetime}</span>
+                          `;
+                  div.innerHTML = content;
+                  chatBox.appendChild(div);
+                }
+
+                else if (response.type === "image") {
+                  let div = document.createElement("div");
+                  div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+                  div.setAttribute("id", response._id);
+                  let content = `
+        <div  style="padding: 0px 13px;">
+          <h6 id="scrollspyHeading1">${response.sender.username}</h6>
+          <img style="width:230px" src="${response.content}" />
+        <div>
+          <span style="float:right">${response.datetime}</span>
+          `;
+                  div.innerHTML = content;
+                  chatBox.appendChild(div);
+                }
+                else if (response.type === "pdf") {
+                  let div = document.createElement("div");
+                  div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+                  div.setAttribute("id", response._id);
+                  let content = `<div style="padding: 0px 13px;"><h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                                <div>
+                                    <img class="pdf-icon"  src="/image/pdf.png"/>
+                                    <span style="margin-left:20px">${response.name}</span>
+                                      <a style="
+                                      float: right;
+                                      margin-right: 32px;
+                                      font-size: 20px;
+                                      color: #000;
+                                      "href="${response.content}" target="_blank"/>
+                                            <i class="bi bi-eye-fill"></i>
+                                      </a>
+                                </div>
+          
+                        <div>
+                          <span style="float:right">${response.datetime}</span>`;
+                  div.innerHTML = content;
+                  chatBox.appendChild(div);
+                }
+                else if (response.type === "docx") {
+                  let div = document.createElement("div");
+                  div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+                  div.setAttribute("id", response._id);
+                  let content = `<div style="padding: 0px 13px;><h6 id="scrollspyHeading1">${response.sender.username}</h6>
+                                <div>
+                                    <img class="pdf-icon"  src="/image/docx.png"/>
+                                    <span style="margin-left:20px">${response.name}</span>
+                                      <a style="
+                                      float: right;
+                                      margin-right: 32px;
+                                      font-size: 20px;
+                                      color: #000;
+                                      "href="${response.content}" target="_blank"/>
+                                            <i class="bi bi-eye-fill"></i>
+                                      </a>
+                                </div>
+          
+                        <div>
+                          <span style="float:right">${response.datetime}</span>`;
+                  div.innerHTML = content;
+                  chatBox.appendChild(div);
+                }
+                else if (response.type === "link") {
+                  console.log("link")
+                  //         var settings = {
+                  //               "url": await `ENDPOINT/getOrderDetailsInChat/${theChatId}`,
+                  //               "method": "get",
+                  //               "headers": {
+                  //                 "Content-Type": "application/json"
+                  //               },
+                  //             };
+                  //             console.log(settings)
+                  //            $.ajax(settings).done( function (result) {
+                  // console.log("amount status",result)
+                  // if(result.message.status !=="success"){
+                  //    console.log("pendding")
+                  let div = document.createElement("div");
+                  div.classList.add(response.sender.type === 'admin' ? 'outgoing' : 'incoming');
+                  div.setAttribute("id", response._id);
+                  let content = `
+        <div">
+        <div class="bg-light text-center p-4">
+            <h3>
+              Payment
+            </h3>
+            <p>please make payment</p>
+        </div>
+          <label class="form-control text-light" style="background: rgb(91 163 98)">
+                Pay<b style="float: right">${response.content}</b>
+          </label>
+    </div>
+    <span style="float:right">${response.datetime}</span>;
+        `;
+                  div.innerHTML = content;
+                  chatBox.appendChild(div);
+                  //  }
+                  //else{
+                  //   console.log("success")
+                  //     let div = document.createElement("div");
+                  //           div.classList.add(response.sender.type==='admin' ? 'outgoing' : 'incoming');
+                  //           div.setAttribute("id", response._id);
+                  //           let content = `
+                  //           <div>
+                  //             <div class="bg-light text-center p-4">
+                  //               <h3>
+                  //                 Payment
+                  //                 </h3>
+                  //                 <p> Payment Successfull</p>
+                  //               </div>
+                  //               <label class="form-control text-light text-center" style="background:green">
+                  //            Payment Successfull
+                  //             </label>
+                  //             </div>
+
+                  //           `;
+                  //           div.innerHTML = content;
+                  //           chatBox.appendChild(div);
+
+                  // }
+
+
+
+                }
+
+              });
+              socket.emit("room", res[0].chat._id);
+              const chat = res[0].chat.chatName;
+              console.log(chat);
+
+
+              var elements = document.querySelectorAll(".addClass");
+              for (var i = 0; i < elements.length; i++) {
+                elements[i].style.backgroundColor = "#ececec";
+              }
+              console.log("djhgdjhgdjdgjhg", e.target.id);
+              const item = document.getElementById(e.target.id).style.backgroundColor = "#eceece"
+              document.getElementById("ChatAssignButton").style.display = "block"
+            },
+            error: function (error) {
+              console.log(error);
+            },
+          });
+        },
+        error: function (error) {
+
+          console.log(error)
+          if (error.responseJSON.data ===
+            "Internal error occured: you can't start chat because this chat is already assigned") {
+            alert("you can't start chat because this chat is already assigned")
+            document.getElementById("ChatAssignButton").style.display = "none"
+            theChatId = ''
+
+          }
+        }
+      })
+
+
+    };
+
+
+    function clickId(id) {
+      console.log("idddd",id)
+      let updateForm = document.getElementById("updateForm")
+      let ChatId;
+      $.ajax({
+        url: `${ENDPOINT}/findupdatemessage/${id}`,
+        method: "get",
+        contentType: "application/x-www-form-urlencoded",
+        success: function (res) {
+          document.getElementById("updateForminput").value = res.message.content
+          console.log("resss", res.message)
+          ChatId = res.message.chat
+        },
+        error: function (error) {
+          console.log(error)
+        }
+      })
+      updateForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let newMessage = $("#updateForminput").val();
+        console.log("new", newMessage)
+        $.ajax({
+          url: `${ENDPOINT}/edit-message/${id}`,
+          method: "post",
+          contentType: "application/x-www-form-urlencoded",
+          data: {
+            newMessage,
+          },
+          success: function (res) {
+            console.log(res);
+            trClicked(
+              {
+                target: {
+                  id: ChatId
+                }
+              }
+            )
+          },
+          error: function (error) {
+            console.log(error)
+          }
+        })
+
+      })
+
+    }
+
+
+    // socket.on("message2", (chatId) => {
+    //   console.log("chatId", chatId)
+    // })
+
+
+    //   FIND CHATS
+
+    function getChatList() {
+      $.ajax({
+        url: `${ENDPOINT}/chat`,
+        method: "get",
+        contentType: "application/x-www-form-urlencoded",
+        headers: {
+          authorization: token,
+        },
+        success: function (res) {
+          console.log("***********************", res);
+
+          // setChatId(response.data[0]._id);
+
+          let chatsList = document.querySelector("#chatsList");
+          chatsList.innerHTML = null;
+          console.log(chatsList);
+
+          res.forEach((response, index) => {
+            console.log("rrrrrrr", response)
+            // const filterArrayofChatlist = response.users.filter(
+            //   (user) => user.email !== "getproadmin000@gmail.com"
+            // )
+            // console.log("ffff",filterArrayofChatlist)
+
+
+            // FIND CHAT MESSAGE
+
+          //  $.ajax({
+          //     url: `${ENDPOINT}/message/${response._id}`,
+          //     method: "get",
+          //     contentType: "application/x-www-form-urlencoded",
+          //     headers: {
+          //       authorization: token,
+          //     },
+          //     success: function (res) {
+          //       console.log("sdfggcdsfgdgfsdf", res)
+
+                //   FIND USERDETAILS
+           
+
+            
+                if (response.latestMessage !==null) {
+                  let tr = document.createElement("tr");
+                  tr.classList.add("addClass")
+                  tr.setAttribute("id", response._id);
+                  let content = `
+                    <td id=${response._id} class="" style="padding :10px;width:15%">
+                        <h4 id=${response._id} class="mb-0"><i id=${response._id} class="bi bi-person-circle"></i></h4>
+                    </td>
+                    <td id=${response._id}>${response.users.filter(
+                    (user) => user.type !== "admin"
+                  )[0].username + " (" + response.orderId?.products.map((product) => product.p_title + " ") + ")"
+                    }
+                    </td>`;
+                  tr.innerHTML = content;
+
+
+                  tr.onclick = trClicked;
+                 chatsList.appendChild(tr);
+                }
+             
+
+            //   },
+            //   error: function (error) {
+            //     console.log(error);
+            //   },
+            // });
+
+          });
+          const chat = res[0].chatName;
+          console.log(chat);
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    }
+
+    getChatList();
+
+    async function connectSocket(socket) {
+
+
+      await socket.on("message", (chatId) => {
+
+        console.log("Recieved: ", chatId)
+        // trClicked({
+        //   target: {
+        //     id: chatId.chat._id
+        //   }
+        // });
+
+        if (chatId.type === "message") {
+          let chatBox = document.querySelector("#chatBox");
+          let div = document.createElement("div");
+          div.classList.add(chatId.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", chatId._id);
+          let content = `<div style="position: relative"><h6 id="scrollspyHeading1">${chatId.sender.username}</h6>
+          <p>${chatId.content}</p>
+         
+          <button id="babluuu" onclick= clickId("${chatId._id}") type="button" class="bg-transparent border-0 position-absolute top-0 end-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="bi bi-pencil-square"></i>
+                                  </button>
+                                  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                         <form action="/edit-message" method="post" id="updateForm">
+                                          <input type="text" placeholder="Enter New Message...." id="updateForminput" class="form-control">
+                                          <div class="modal-footer">
+                                           <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                                          </div>
+                                          </form>
+                                        </div>
+                                       
+                                      </div>
+                                    </div>
+                                  </div>
+                              <div>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (chatId.type === "image") {
+          let div = document.createElement("div");
+          div.classList.add(chatId.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", chatId._id);
+          let content = `
+              <div>
+                <h6 id="scrollspyHeading1">${chatId.sender.username}</h6>
+                <img style="width:230px" src="${chatId.content}" />
+              <div>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (chatId.type === "pdf") {
+          let div = document.createElement("div");
+          div.classList.add(chatId.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", chatId._id);
+          let content = `<div><h6 id="scrollspyHeading1">${chatId.sender.username}</h6>
+                                      <div>
+                                          <img class="pdf-icon"  src="/image/pdf.png"/>
+                                          <span style="margin-left:20px">${chatId.name}</span>
+                                            <a style="
+                                            float: right;
+                                            margin-right: 32px;
+                                            font-size: 20px;
+                                            color: #000;
+                                            "href="${chatId.content}" target="_blank"/>
+                                                  <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                      </div>
+                
+                              <div>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        else if (chatId.type === "docx") {
+          let div = document.createElement("div");
+          div.classList.add(chatId.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", chatId._id);
+          let content = `<div><h6 id="scrollspyHeading1">${chatId.sender.username}</h6>
+                                      <div>
+                                          <img class="pdf-icon"  src="/image/docx.png"/>
+                                          <span style="margin-left:20px">${chatId.name}</span>
+                                            <a style="
+                                            float: right;
+                                            margin-right: 32px;
+                                            font-size: 20px;
+                                            color: #000;
+                                            "href="${chatId.content}" target="_blank"/>
+                                                  <i class="bi bi-eye-fill"></i>
+                                            </a>
+                                      </div>
+                
+                              <div>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        } else if (chatId.type === "link") {
+          let div = document.createElement("div");
+          div.classList.add(chatId.sender.type === 'admin' ? 'outgoing' : 'incoming');
+          div.setAttribute("id", chatId._id);
+          let content = `
+          <div>
+              <div class="bg-light text-center p-4">
+                  <h3>
+                    Payment
+                  </h3>
+                  <p>please make payment</p>
+              </div>
+                <label class="form-control text-light" style="background: rgb(91 163 98)">
+                      Pay<b style="float: right">${chatId.content}</b>
+                </label>
+          </div>`;
+          div.innerHTML = content;
+          chatBox.appendChild(div);
+        }
+        // getChatList();
+        console.log("chatId", chatId);
+      })
+
+    }
+
+
+    console.log(localStorage.getItem("token"));
+  </script>
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("chatsList");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+{
+    "pages": [
+        "users",
+        "query",
+        "workSample",
+        "authors",
+        "faqs",
+        "blog",
+        "coupon",
+        "career",
+        "chats",
+        "extraCredit",
+        "contentType",
+        "expertLevel",
+        "adminOrderHistory",
+        "adminWalletHistory",
+        "addPermission",
+        "role",
+        "subAdmin",
+        "reviews"
+
+    ]
+}
