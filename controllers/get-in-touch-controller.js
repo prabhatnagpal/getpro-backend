@@ -553,7 +553,7 @@ module.exports.getInTouch = async (req, res) => {
         deadline: deadline,
         status: "Pending",
         order_id: orderNo,
-       
+        is_order: "true"
       });
       await orderPlaced.save();
 
