@@ -2,8 +2,11 @@ const Authors = require("../model/authors");
 
 module.exports.getAuthor = async (req, res) => {
   try {
+
     const slug = req.params.id;
-    const authorsData = await Authors.findOne({ title: slug });
+    console.log(slug)
+    const authorsData = await Authors.findOne({ slug: slug });
+    console.log("wwwwwww",authorsData)
     res.status(200).json({
       data: authorsData,
     });
@@ -11,6 +14,7 @@ module.exports.getAuthor = async (req, res) => {
     res.status(500).json({
       error: error.message,
     });
+    
   }
 };
 

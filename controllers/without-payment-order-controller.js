@@ -69,7 +69,8 @@ module.exports.withoutPaymentOrder = async (req, res) => {
       couponAmount: couponAmount,
       products: arr,
       status: "Pending",
-      order_id:orderNo
+      order_id:orderNo,
+      is_order:"true"
     });
    const orderData= await orderPlaced.save();
     // DELETE CART OF USER

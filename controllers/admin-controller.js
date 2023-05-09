@@ -24,6 +24,7 @@ const Permission = require("../model/permission");
 const Role = require("../model/role");
 const Rating = require("../model/rating");
 const AddCard = require("../model/addCard");
+const Prices = require("../model/prices");
 
 const moment = require("moment");
 const fs = require("fs");
@@ -1662,3 +1663,53 @@ module.exports.getChatSubAdmin = async (req, res) => {
     });
   }
 };
+
+
+module.exports.price = async (req, res) => {
+  try {
+    const data = await Prices.find()
+  res.render("prices.ejs",{result:data})
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+module.exports.priceEdit = async (req, res) => {
+  try {
+    const id = req.params.id
+    const data = await Prices.findById(id)
+  res.render("prices-edit.ejs",{result:data})
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+module.exports.priceEditSubmit = async (req, res) => {
+  try {
+    const id = req.params.id
+    const data = await Prices.findByIdAndUpdate(id,{oneDay:req.body.oneDay,twoDay:req.body.twoDay,fiveDay:req.body.fiveDay})
+    res.redirect("/prices")
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+
+module.exports.getAllPrices = async (req, res) => {
+  try {
+   const data = await Prices.find()
+   res.status(200).json({
+    message:data
+   })
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
+};
+

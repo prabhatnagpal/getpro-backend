@@ -362,7 +362,8 @@ module.exports.paypalSubscriptionSuccess = async (req, res) => {
       products: obj,
       status: "success",
       sub_status: "Active",
-      order_id:orderNo
+      order_id:orderNo,
+      is_order:"true"
     });
     await orderPlaced.save();
     res.json({ message: "subscriptiion successfull" });

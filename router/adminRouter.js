@@ -368,4 +368,9 @@ adminRouter
 adminRouter.route("/getChatSubAdmin").get(adminController.getChatSubAdmin);
 adminRouter.route("/deleteQuery/:id").get(adminController.QueryDelete);
 
+adminRouter.route("/prices").get(adminController.price);
+adminRouter.route("/pricesEdit/:id").get(adminController.priceEdit);
+adminRouter.route("/pricesEdit/:id").post(adminController.priceEditSubmit);
+adminRouter.route("/getAllPrices").get(adminController.getAllPrices);
+
 module.exports = adminRouter;

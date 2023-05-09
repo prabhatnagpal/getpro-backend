@@ -110,7 +110,8 @@ module.exports.orderRazorpaySuccess = async (req, res) => {
         couponAmount: couponAmount,
         products: arr,
         status: "success",
-        order_id:orderNo
+        order_id:orderNo,
+        is_order:"true"
       });
      const orderData= await orderPlaced.save();
       console.log("oooo", orderPlaced);

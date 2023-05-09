@@ -12,6 +12,7 @@ const stripe = Stripe(process.env.SECRET);
 
 module.exports.orderStripe = async (req, res) => {
   try {
+    console.log(req.body)
     const TotalAmount = req.body.TotalAmount;
     const checkoutObject = {
       payment_method_types: ["card"],
@@ -47,7 +48,7 @@ module.exports.orderStripeSuccess = async (req, res) => {
   try {
     if (req.body.pay_id) {
       const session = await stripe.checkout.sessions.retrieve(req.body.pay_id);
-      console.log("sessionCheck", session);
+      console.log("sessionCheck", req.body);
       if (session.status === "complete") {
         const pay_id = req.body.pay_id;
         console.log("qwertyui", req.body.pay_id);
@@ -111,7 +112,8 @@ module.exports.orderStripeSuccess = async (req, res) => {
           couponAmount: couponAmount,
           products: arr,
           status: "success",
-          order_id:orderNo
+          order_id:orderNo,
+          is_order:"true"
         });
        const orderData= await orderPlaced.save();
         // DELETE CART OF USER
